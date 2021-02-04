@@ -83,14 +83,19 @@ class HNewsPresenter: NSCoder {
     //MARK: API Methods
     func getHNewsList() {
         
-        self.mainService.getHNewsList().done { responseIn in
+        self.getSaveHNewsList()
+        if EZConnectivity.isConnedToInternet {
+            self.mainService.getHNewsList().done { responseIn in
+                
+                if let mHNList = responseIn.mHNewsList {
+                    self.saveHNewsList(listIn: mHNList)
+                }
             
-            if let mHNList = responseIn.mHNewsList {
-                self.saveHNewsList(listIn: mHNList)
+            }.catch { errorIn in
+                self.mainAPIMsg.value = errorIn.localizedDescription
             }
-        
-        }.catch { errorIn in
-            self.mainAPIMsg.value = errorIn.localizedDescription
+        }else{
+            self.mainAPIMsg.value = "It seems there is no internet, please check your internet connection"
         }
     }
 }

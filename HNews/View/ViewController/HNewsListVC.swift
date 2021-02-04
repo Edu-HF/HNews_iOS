@@ -33,6 +33,7 @@ class HNewsListVC: BaseViewController {
     private func setupListeners() {
         
         HNewsPresenter.sharedIntance.mainAPIMsg.bind { msgIn in
+            self.mRControl.endRefreshing()
             self.showAlertWithActions(titleIn: "Attention", msgIn: msgIn, actionsIn: nil)
         }
         

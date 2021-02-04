@@ -71,3 +71,9 @@ class APIRequest: NSObject {
         }
     }
 }
+
+class EZConnectivity {
+    class var isConnedToInternet: Bool {
+        return NetworkReachabilityManager()?.isReachable ?? false
+    }
+}
